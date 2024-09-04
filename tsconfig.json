@@ -25,8 +25,8 @@
 			"#settings": ["./settings/index.ts"],
 			"#tools": ["./tools/index.ts"],
 			"#server": ["./server/index.ts"],
+			"#messages/*": ["./messages/index.ts"],
 			"#lang/*": ["../lang/*"],
-			"#messages/*": ["../messages/*"],
 			"@discordjs/builders/*": ["ignore"]
 		},
 	},

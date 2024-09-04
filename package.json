@@ -52,12 +52,11 @@
     "#server": [
       "./build/server/index.js"
     ],
+    "#messages/*": [
+      "./messages/index.js"
+    ],
     "#lang/*": [
       "./lang/*"
-    ]
-    ,
-    "#messages/*": [
-      "./messages/*"
     ]
   }
 }
