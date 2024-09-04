@@ -55,5 +55,9 @@
     "#lang/*": [
       "./lang/*"
     ]
+    ,
+    "#messages/*": [
+      "./messages/*"
+    ]
   }
 }
