@@ -19,17 +19,16 @@ export function menuSetupMessage(guildName: string, guildIconUrl: string | undef
     const rowButtonsMenuSetup = createRow(
         new ButtonBuilder({
             customId: "button/menu/setup/home",
-            label: "Inicio",
+            label: "Início",
             style: ButtonStyle.Secondary,
             emoji: "<:Home:1280961849390530590>",
             disabled: true,
         }),
         new ButtonBuilder({
-            customId: "button/menu/setup/canais",
+            customId: "button/menu/setup/channels",
             label: "Canais",
             style: ButtonStyle.Secondary,
             emoji: "<:Channels:1280961857519222784>",
-            disabled: true,
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/boost",

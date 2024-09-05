@@ -5,6 +5,9 @@ export const guildSchema = new Schema(
         guildId: { type: String, required: true },
         guildName: { type: String },
         guildIconUrl: { type: String },
+        bloodsChannelAll: { type: Array },
+        bloodsChannelText: { type: Array },
+        bloodsChannelVoice: { type: Array },
     },
     {
         versionKey: false,
@@ -50,6 +53,30 @@ export const guildSchema = new Schema(
                 if (!guild) guild = await this.create({ guildId: guildId });
 
                 await guild.updateOne({ [key]: guild.get(key) - value });
+
+                guild = await this.findOne({ guildId: guildId });
+
+                return guild?.get(key);
+            },
+            // Push - Adiciona a uma chave de Array um valor
+            async push(guildId: string, key: string, value: number | string) {
+                let guild = await this.findOne({ guildId: guildId });
+
+                if (!guild) guild = await this.create({ guildId: guildId });
+
+                await guild.updateOne({ $push: { [key]: value } });
+
+                guild = await this.findOne({ guildId: guildId });
+
+                return guild?.get(key);
+            },
+            // Pull - Remove de uma chave de Array um valor
+            async pull(guildId: string, key: string, value: number | string) {
+                let guild = await this.findOne({ guildId: guildId });
+
+                if (!guild) guild = await this.create({ guildId: guildId });
+
+                await guild.updateOne({ $pull: { [key]: value } });
 
                 guild = await this.findOne({ guildId: guildId });
 
