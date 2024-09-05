@@ -1,11 +1,11 @@
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
-export function firstSetupMessage(guildName: string, guildId: string, guildUrl: string | null) {
+export function firstSetupMessage(guildName: string, guildId: string, guildIconUrl: string | null) {
     // Mensagem - Embed
     const embedFirstSetup = new EmbedBuilder()
         .setAuthor({ name: "Confirme o Servidor", iconURL: "https://cdn.discordapp.com/emojis/1281046694406131817.webp?size=32&quality=lossless" })
-        .setThumbnail(guildUrl)
+        .setThumbnail(guildIconUrl)
         .setDescription(
             `Bem-vindo(a) à primeira etapa de configuração. Por favor, confirme se deseja definir este servidor como o padrão.
             

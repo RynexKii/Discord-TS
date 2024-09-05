@@ -1,7 +1,7 @@
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
-export function menuSetupMessage() {
+export function menuSetupMessage(guildName: string, guildIconUrl: string | undefined) {
     // Mensagem - Embed
     const embedMenuSetup = new EmbedBuilder()
         .setAuthor({ name: "Painel de Controle", iconURL: "https://cdn.discordapp.com/emojis/1280961865735995522.webp?size=32&quality=lossless" })
@@ -12,6 +12,7 @@ export function menuSetupMessage() {
             **Boost** - Ative um Boost de Bloods no servidor.
             **Reset** - Reseta todas as configurações.`
         )
+        .setFooter({ text: `Servidor Principal: ${guildName}`, iconURL: guildIconUrl })
         .setColor("White");
 
     // Componentes - Botões

@@ -18,12 +18,14 @@ new Command({
     async run(interaction) {
         const guildId = interaction.guildId;
         const guildName = interaction.guild.name;
-        const guildUrl = interaction.guild.iconURL();
+        const guildIconUrl = interaction.guild.iconURL();
 
         const guildIdDatabase = await database.guild.get(guildId, "guildId");
+        const guildNameDatabase = await database.guild.get(guildId, "guildName");
+        const guildIconUrlDatabase = await database.guild.get(guildId, "guildIconUrl");
 
-        if (!guildIdDatabase) return await interaction.reply(firstSetupMessage(guildName, guildId, guildUrl));
+        if (!guildIdDatabase) return await interaction.reply(firstSetupMessage(guildName, guildId, guildIconUrl));
 
-        return await interaction.reply(menuSetupMessage());
+        return await interaction.reply(menuSetupMessage(guildNameDatabase, guildIconUrlDatabase));
     },
 });

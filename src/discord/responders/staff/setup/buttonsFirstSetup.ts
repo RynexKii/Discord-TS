@@ -9,12 +9,17 @@ new Responder({
     cache: "cached",
     async run(interaction) {
         const guildId = interaction.guildId;
+        const guildName = interaction.guild.name;
+        const guildIconUrl = interaction.guild.iconURL();
 
         if (!interaction.member.permissions.has("Administrator")) return await interaction.reply(setupNotPermissionContent);
 
         await database.guild.set(guildId, "guildId", guildId);
+        await database.guild.set(guildId, "guildName", guildName);
 
-        return await interaction.update(menuSetupMessage());
+        if (guildIconUrl) await database.guild.set(guildId, "guildIconUrl", guildIconUrl);
+
+        return await interaction.update(menuSetupMessage(guildName, guildIconUrl ?? undefined));
     },
 });
 

@@ -3,6 +3,8 @@ import { Schema } from "mongoose";
 export const guildSchema = new Schema(
     {
         guildId: { type: String, required: true },
+        guildName: { type: String },
+        guildIconUrl: { type: String },
     },
     {
         versionKey: false,
