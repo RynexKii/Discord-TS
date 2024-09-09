@@ -21,11 +21,9 @@ new Command({
         const guildIconUrl = interaction.guild.iconURL();
 
         const guildIdDatabase = await database.guild.get(guildId, "guildId");
-        const guildNameDatabase = await database.guild.get(guildId, "guildName");
-        const guildIconUrlDatabase = await database.guild.get(guildId, "guildIconUrl");
 
         if (!guildIdDatabase) return await interaction.reply(firstSetupMessage(guildName, guildId, guildIconUrl));
 
-        return await interaction.reply(menuSetupMessage(guildNameDatabase, guildIconUrlDatabase));
+        return await interaction.reply(await menuSetupMessage(guildId));
     },
 });

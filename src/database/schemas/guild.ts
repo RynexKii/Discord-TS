@@ -8,6 +8,9 @@ export const guildSchema = new Schema(
         bloodsChannelAll: { type: Array },
         bloodsChannelText: { type: Array },
         bloodsChannelVoice: { type: Array },
+        welcomeMessage: { type: String },
+        welcomeChannel: { type: String },
+        welcomeChannelLogs: { type: String },
     },
     {
         versionKey: false,
@@ -27,6 +30,12 @@ export const guildSchema = new Schema(
             // Delete = Para deletar um perfil do Banco de Dados
             async delete(guildId: string) {
                 await this.findOneAndDelete({ guildId: guildId });
+            },
+            // DeleteKey = Para deletar uma chave específica do Banco de Dados
+            async deleteKey(guildId: string, key: string) {
+                const guild = await this.findOne({ guildId: guildId });
+
+                return guild?.updateOne({ $unset: { [key]: key } });
             },
             // Get = Para retornar alguma chave do Banco de Dados
             async get(guildId: string, key: string) {

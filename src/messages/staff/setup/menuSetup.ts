@@ -1,7 +1,12 @@
+import { database } from "#database";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
-export function menuSetupMessage(guildName: string, guildIconUrl: string | undefined) {
+export async function menuSetupMessage(guildId: string) {
+    // Importando - Banco de Dados
+    const guildNameDatabase = await database.guild.get(guildId, "guildName");
+    const guildIconUrlDatabase = await database.guild.get(guildId, "guildIconUrl");
+
     // Mensagem - Embed
     const embedMenuSetup = new EmbedBuilder()
         .setAuthor({ name: "Painel de Controle", iconURL: "https://cdn.discordapp.com/emojis/1280961865735995522.webp?size=32&quality=lossless" })
@@ -10,9 +15,11 @@ export function menuSetupMessage(guildName: string, guildIconUrl: string | undef
             
             >>> **Canais** - Configure canais que não contaram para o sistema de Bloods.
             **Boost** - Ative um Boost de Bloods no servidor.
+            **Logs** - Configure os canais de Logs.
+            **Boas Vindas** - Configure uma mensagem de boas vindas para quem entrar no servidor.
             **Reset** - Reseta todas as configurações.`
         )
-        .setFooter({ text: `Servidor Principal: ${guildName}`, iconURL: guildIconUrl })
+        .setFooter({ text: `Servidor Principal: ${guildNameDatabase}`, iconURL: guildIconUrlDatabase })
         .setColor("White");
 
     // Componentes - Botões
@@ -28,7 +35,7 @@ export function menuSetupMessage(guildName: string, guildIconUrl: string | undef
             customId: "button/menu/setup/channels",
             label: "Canais",
             style: ButtonStyle.Secondary,
-            emoji: "<:Channels:1280961857519222784>",
+            emoji: "<:ChannelsLogs:1280961857519222784>",
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/boost",
@@ -38,6 +45,23 @@ export function menuSetupMessage(guildName: string, guildIconUrl: string | undef
             disabled: true,
         }),
         new ButtonBuilder({
+            customId: "button/menu/setup/logs",
+            label: "Logs",
+            style: ButtonStyle.Secondary,
+            emoji: "<:Logs:1281273491009572934>",
+            disabled: true,
+        })
+    );
+
+    // Componentes - Botões 2
+    const rowButtonsMenuSetup2 = createRow(
+        new ButtonBuilder({
+            customId: "button/menu/setup/welcome",
+            label: "Boas Vindas",
+            style: ButtonStyle.Secondary,
+            emoji: "<:Welcome:1281273870955057226>",
+        }),
+        new ButtonBuilder({
             customId: "button/menu/setup/reset",
             label: "Reset",
             style: ButtonStyle.Danger,
@@ -45,5 +69,5 @@ export function menuSetupMessage(guildName: string, guildIconUrl: string | undef
         })
     );
 
-    return { embeds: [embedMenuSetup], components: [rowButtonsMenuSetup], ephemeral };
+    return { embeds: [embedMenuSetup], components: [rowButtonsMenuSetup, rowButtonsMenuSetup2], ephemeral };
 }

@@ -32,7 +32,11 @@ async function voiceChannels(guildId: string) {
     return voiceChannels;
 }
 
-export async function menuChannelMessage(guildId: string, guildName: string, guildIconUrl: string | undefined) {
+export async function menuChannelMessage(guildId: string) {
+    // Importando - Banco de Dados
+    const guildNameDatabase = await database.guild.get(guildId, "guildName");
+    const guildIconUrlDatabase = await database.guild.get(guildId, "guildIconUrl");
+
     // Mensagem - Embed
     const embedMenuChannel = new EmbedBuilder()
         .setAuthor({ name: "Painel de Controle - Canais", iconURL: "https://cdn.discordapp.com/emojis/1280961865735995522.webp?size=32&quality=lossless" })
@@ -43,7 +47,7 @@ export async function menuChannelMessage(guildId: string, guildName: string, gui
             * **Canais de Voz**: ${(await voiceChannels(guildId)) ?? inlineCode("Sem Canal")}
             `
         )
-        .setFooter({ text: `Servidor Principal: ${guildName}`, iconURL: guildIconUrl })
+        .setFooter({ text: `Servidor Principal: ${guildNameDatabase}`, iconURL: guildIconUrlDatabase })
         .setColor("White");
 
     // Componentes - Botões

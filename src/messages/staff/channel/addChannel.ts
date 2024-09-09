@@ -16,6 +16,7 @@ export function addChannelMessage() {
         })
     );
 
+    // Componentes - Botões
     const rowButtonHome = createRow(
         new ButtonBuilder({
             customId: "button/menu/setup/home",

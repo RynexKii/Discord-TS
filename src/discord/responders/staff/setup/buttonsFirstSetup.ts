@@ -19,7 +19,7 @@ new Responder({
 
         if (guildIconUrl) await database.guild.set(guildId, "guildIconUrl", guildIconUrl);
 
-        return await interaction.update(menuSetupMessage(guildName, guildIconUrl ?? undefined));
+        return await interaction.update(await menuSetupMessage(guildId));
     },
 });
 
