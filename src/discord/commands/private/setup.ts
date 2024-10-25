@@ -16,7 +16,7 @@ new Command({
         },
     ],
     async run(interaction) {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral });
 
         const guildId = interaction.guildId;
         const guildName = interaction.guild.name;

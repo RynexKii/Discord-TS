@@ -1,6 +1,5 @@
 import { Responder, ResponderType } from "#base";
-import { database } from "#database";
-import { firstSetupMessage, menuChannelMessage, menuSetupMessage, menuWelcomeMessage, setupNotPermissionContent } from "#messages";
+import { checkResetMessage, menuChannelMessage, menuSetupMessage, menuWelcomeMessage, setupNotPermissionContent } from "#messages";
 
 // Botão de Início
 new Responder({
@@ -54,16 +53,8 @@ new Responder({
     type: ResponderType.Button,
     cache: "cached",
     async run(interaction) {
-        const guildId = interaction.guildId;
-        const guildName = interaction.guild.name;
-        const guildIconUrl = interaction.guild.iconURL();
-
         if (!interaction.member.permissions.has("Administrator")) return await interaction.reply(setupNotPermissionContent);
 
-        await interaction.deferUpdate();
-
-        await database.guild.delete(guildId);
-
-        return await interaction.editReply(firstSetupMessage(guildName, guildId, guildIconUrl));
+        return await interaction.update(checkResetMessage());
     },
 });

@@ -16,6 +16,7 @@ export async function menuSetupMessage(guildId: string) {
             >>> **Canais** - Configure canais que não contaram para o sistema de Bloods.
             **Boost** - Ative um Boost de Bloods no servidor.
             **Logs** - Configure os canais de Logs.
+            **Gerar Código** - Gere códigos para resgate.
             **Boas Vindas** - Configure uma mensagem de boas vindas para quem entrar no servidor.
             **Reset** - Reseta todas as configurações.`
         )
@@ -49,6 +50,13 @@ export async function menuSetupMessage(guildId: string) {
             label: "Logs",
             style: ButtonStyle.Secondary,
             emoji: "<:Logs:1281273491009572934>",
+            disabled: true,
+        }),
+        new ButtonBuilder({
+            customId: "button/menu/setup/code",
+            label: "Gerar Código",
+            style: ButtonStyle.Secondary,
+            emoji: "<:Key:1299406451202195517>",
             disabled: true,
         })
     );
