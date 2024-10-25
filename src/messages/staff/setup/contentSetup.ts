@@ -1,1 +1,3 @@
-export const setupNotPermissionContent = { content: "<:Error:1281076494994505738> Você não tem permissão para isso!", ephemeral };
+import { settings } from "#settings";
+
+export const setupNotPermissionContent = { content: `${settings.emojis.static.error} Você não tem permissão para isso!`, ephemeral };

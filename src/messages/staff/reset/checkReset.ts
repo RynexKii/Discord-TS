@@ -1,3 +1,4 @@
+import { settings } from "#settings";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
@@ -11,13 +12,13 @@ export function checkResetMessage() {
             customId: "button/menu/setup/reset/confirm",
             label: "Confirmar",
             style: ButtonStyle.Success,
-            emoji: "<:Confirm:1281046703176421477>",
+            emoji: settings.emojis.static.confirm,
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/reset/cancel",
             label: "Cancelar",
             style: ButtonStyle.Danger,
-            emoji: "<:Cancel:1281046710830895115>",
+            emoji: settings.emojis.static.cancel,
         })
     );
 

@@ -1,4 +1,5 @@
 import { database } from "#database";
+import { settings } from "#settings";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, channelMention, EmbedBuilder, inlineCode } from "discord.js";
 
@@ -39,25 +40,25 @@ export async function menuWelcomeMessage(guildId: string) {
             customId: "button/menu/setup/home",
             label: "Início",
             style: ButtonStyle.Secondary,
-            emoji: "<:Home:1280961849390530590>",
+            emoji: settings.emojis.static.home,
         }),
         new ButtonBuilder({
             customId: "button/menu/welcome/message",
             label: "Mensagem",
             style: ButtonStyle.Secondary,
-            emoji: "<:Messages:1281278200667963515>",
+            emoji: settings.emojis.static.messages,
         }),
         new ButtonBuilder({
             customId: "button/menu/welcome/channel",
             label: "Canal",
             style: ButtonStyle.Secondary,
-            emoji: "<:Channels:1281278191817850982>",
+            emoji: settings.emojis.static.channels,
         }),
         new ButtonBuilder({
             customId: "button/menu/welcome/channel/logs",
             label: "Canal Logs",
             style: ButtonStyle.Secondary,
-            emoji: "<:ChannelsLogs:1280961857519222784>",
+            emoji: settings.emojis.static.channelsLogs,
         })
     );
 

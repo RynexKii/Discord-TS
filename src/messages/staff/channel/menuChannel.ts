@@ -1,4 +1,5 @@
 import { database } from "#database";
+import { settings } from "#settings";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder, inlineCode } from "discord.js";
 
@@ -56,19 +57,19 @@ export async function menuChannelMessage(guildId: string) {
             customId: "button/menu/setup/home",
             label: "Início",
             style: ButtonStyle.Secondary,
-            emoji: "<:Home:1280961849390530590>",
+            emoji: settings.emojis.static.home,
         }),
         new ButtonBuilder({
             customId: "button/menu/channel/add",
             label: "Adicionar",
             style: ButtonStyle.Success,
-            emoji: "<:Add:1281098367308533780>",
+            emoji: settings.emojis.static.add,
         }),
         new ButtonBuilder({
             customId: "button/menu/channel/remove",
             label: "Remover",
             style: ButtonStyle.Danger,
-            emoji: "<:Remove:1281098964074106940>",
+            emoji: settings.emojis.static.remove,
         })
     );
 

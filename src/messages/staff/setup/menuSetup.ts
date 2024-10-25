@@ -1,4 +1,5 @@
 import { database } from "#database";
+import { settings } from "#settings";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
 
@@ -29,34 +30,34 @@ export async function menuSetupMessage(guildId: string) {
             customId: "button/menu/setup/home",
             label: "Início",
             style: ButtonStyle.Secondary,
-            emoji: "<:Home:1280961849390530590>",
+            emoji: settings.emojis.static.home,
             disabled: true,
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/channels",
             label: "Canais",
             style: ButtonStyle.Secondary,
-            emoji: "<:ChannelsLogs:1280961857519222784>",
+            emoji: settings.emojis.static.channelsLogs,
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/boost",
             label: "Boost",
             style: ButtonStyle.Secondary,
-            emoji: "<:Boost:1280961836094591028>",
+            emoji: settings.emojis.static.boost,
             disabled: true,
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/logs",
             label: "Logs",
             style: ButtonStyle.Secondary,
-            emoji: "<:Logs:1281273491009572934>",
+            emoji: settings.emojis.static.logs,
             disabled: true,
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/code",
             label: "Gerar Código",
             style: ButtonStyle.Secondary,
-            emoji: "<:Key:1299406451202195517>",
+            emoji: settings.emojis.static.key,
             disabled: true,
         })
     );
@@ -67,7 +68,7 @@ export async function menuSetupMessage(guildId: string) {
             customId: "button/menu/setup/welcome",
             label: "Boas Vindas",
             style: ButtonStyle.Secondary,
-            emoji: "<:Welcome:1281273870955057226>",
+            emoji: settings.emojis.static.welcome,
         }),
         new ButtonBuilder({
             customId: "button/menu/setup/reset",

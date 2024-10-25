@@ -1,3 +1,4 @@
+import { settings } from "#settings";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ChannelSelectMenuBuilder, ChannelType, EmbedBuilder } from "discord.js";
 
@@ -26,13 +27,13 @@ export function channelLogsWelcomeMessage() {
             customId: "button/menu/setup/home",
             label: "Início",
             style: ButtonStyle.Secondary,
-            emoji: "<:Home:1280961849390530590>",
+            emoji: settings.emojis.static.home,
         }),
         new ButtonBuilder({
             customId: "button/menu/welcome/channel/logs/remove",
             label: "Remover",
             style: ButtonStyle.Danger,
-            emoji: "<:Remove:1281098964074106940>",
+            emoji: settings.emojis.static.remove,
         })
     );
     return { embeds: [embedChannelLogsWelcomeMessage], components: [rowChannelWelcomeSelect, rowButtonHome] };

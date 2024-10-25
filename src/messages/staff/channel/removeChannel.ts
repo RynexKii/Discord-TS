@@ -1,3 +1,4 @@
+import { settings } from "#settings";
 import { createRow } from "@magicyan/discord";
 import { ButtonBuilder, ButtonStyle, ChannelSelectMenuBuilder, ChannelType, EmbedBuilder } from "discord.js";
 
@@ -21,7 +22,7 @@ export function removeChannelMessage() {
             customId: "button/menu/setup/home",
             label: "Início",
             style: ButtonStyle.Secondary,
-            emoji: "<:home:1224341744531804210>",
+            emoji: settings.emojis.static.home,
         })
     );
 

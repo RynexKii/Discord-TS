@@ -1,27 +1,46 @@
 {
-  "colors": {
-    "default": "#2B2D31",
+    "emojis": {
+        "static": {
+            "boost": "<:Boost:1280961836094591028>",
+            "home": "<:Home:1280961849390530590>",
+            "channelsLogs": "<:ChannelsLogs:1280961857519222784>",
+            "config": "<:Config:1280961865735995522>",
+            "guild": "<:Guild:1281046694406131817>",
+            "confirm": "<:Confirm:1281046703176421477>",
+            "cancel": "<:Cancel:1281046710830895115>",
+            "error": "<:Error:1281076494994505738>",
+            "add": "<:Add:1281098367308533780>",
+            "remove": "<:Remove:1281098964074106940>",
+            "logs": "<:Logs:1281273491009572934>",
+            "welcome": "<:Welcome:1281273870955057226>",
+            "channels": "<:Channels:1281278191817850982>",
+            "messages": "<:Messages:1281278200667963515>",
+            "reward": "<:Reward:1297920432967520256>",
+            "key": "<:Key:1299406451202195517>",
+            "blood": "<:Blood:1299509023674204241>",
+            "shard": "<:Shard:1299509046860058694>"
+        },
+        "animated": {}
+    },
+    "colors": {
+        "default": "#2B2D31",
 
-    "primary": "#3b82f6",
-    "secondary": "#4f545c",
-    "success": "#22c55e",
-    "danger": "#ED4245",
-    "warning": "#fbbd23",
+        "primary": "#3b82f6",
+        "secondary": "#4f545c",
+        "success": "#22c55e",
+        "danger": "#ED4245",
+        "warning": "#fbbd23",
 
-    "azoxo": "#5865F2",
-    "green": "#57F287",
-    "yellow": "#FEE75C",
-    "fuchsia": "#EB459E",
-    "magic": "#c026d3",
+        "azoxo": "#5865F2",
+        "green": "#57F287",
+        "yellow": "#FEE75C",
+        "fuchsia": "#EB459E",
+        "magic": "#c026d3",
 
-    "developer": "#3e70dd",
-    "balance": "#45ddc0",
-    "brilliance": "#f07d5f",
-    "nitro": "#ff6bfa",
-    "bravery": "#9c84ef"
-  },
-  "emojis": {
-    "animated": {},
-    "static":{}
-  }
+        "developer": "#3e70dd",
+        "balance": "#45ddc0",
+        "brilliance": "#f07d5f",
+        "nitro": "#ff6bfa",
+        "bravery": "#9c84ef"
+    }
 }
