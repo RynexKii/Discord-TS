@@ -1,10 +1,10 @@
 import { Responder, ResponderType } from "#base";
 import { database } from "#database";
-import { channelLogsWelcomeMessage, channelWelcomeMessage, menuWelcomeMessage } from "#messages/*";
+import { channelLogsWelcomeMessage, channelWelcomeMessage, menuWelcomeMessage } from "#messages";
 import { createModalInput } from "@magicyan/discord";
 import { ModalBuilder, TextInputStyle } from "discord.js";
 
-// Botão de Bem Vindo(a)
+// Botão da Mensagem de Bem Vindo(a)
 new Responder({
     customId: "button/menu/welcome/message",
     type: ResponderType.Button,
@@ -14,6 +14,8 @@ new Responder({
         const guildName = interaction.guild.name;
 
         const welcomeMessageDatabase = await database.guild.get(guildId, "welcomeMessage");
+
+        const welcomeMessage = Array.isArray(welcomeMessageDatabase) ? undefined : welcomeMessageDatabase?.toString();
 
         const modalMenuWelcomeMessage = new ModalBuilder({
             customId: "modal/menu/welcome/message",
@@ -26,7 +28,7 @@ new Responder({
                     style: TextInputStyle.Paragraph,
                     minLength: 5,
                     maxLength: 1024,
-                    value: welcomeMessageDatabase,
+                    value: welcomeMessage,
                 }),
             ],
         });
@@ -52,9 +54,12 @@ new Responder({
     cache: "cached",
     async run(interaction) {
         const guildId = interaction.guildId;
+
+        await interaction.deferUpdate();
+
         await database.guild.deleteKey(guildId, "welcomeChannel");
 
-        await interaction.update(await menuWelcomeMessage(guildId));
+        await interaction.editReply(await menuWelcomeMessage(guildId));
     },
 });
 
@@ -75,8 +80,11 @@ new Responder({
     cache: "cached",
     async run(interaction) {
         const guildId = interaction.guildId;
+
+        await interaction.deferUpdate();
+
         await database.guild.deleteKey(guildId, "welcomeChannelLogs");
 
-        await interaction.update(await menuWelcomeMessage(guildId));
+        await interaction.editReply(await menuWelcomeMessage(guildId));
     },
 });

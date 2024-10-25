@@ -4,10 +4,10 @@ import { ButtonBuilder, ButtonStyle, EmbedBuilder, inlineCode } from "discord.js
 
 // Função que pega os Canais de Texto do Banco de Dados
 async function textChannels(guildId: string) {
-    const textChannelsDatabase: [] = await database.guild.get(guildId, "bloodsChannelText");
+    const textChannelsDatabase = await database.guild.get(guildId, "bloodsChannelText");
     let textChannels: string | undefined;
 
-    if (textChannelsDatabase.length > 0) {
+    if (Array.isArray(textChannelsDatabase) && textChannelsDatabase.length > 0) {
         textChannels = "";
         textChannelsDatabase.forEach((channelId) => {
             textChannels += `<#${channelId}> `;
@@ -19,10 +19,10 @@ async function textChannels(guildId: string) {
 
 // Função que pega os Canais de Voz do Banco de Dados
 async function voiceChannels(guildId: string) {
-    const voiceChannelsDatabase: [] = await database.guild.get(guildId, "bloodsChannelVoice");
+    const voiceChannelsDatabase = await database.guild.get(guildId, "bloodsChannelVoice");
     let voiceChannels: string | undefined = undefined;
 
-    if (voiceChannelsDatabase.length > 0) {
+    if (Array.isArray(voiceChannelsDatabase) && voiceChannelsDatabase.length > 0) {
         voiceChannels = "";
         voiceChannelsDatabase.forEach((channelId) => {
             voiceChannels += `<#${channelId}> `;
@@ -47,7 +47,7 @@ export async function menuChannelMessage(guildId: string) {
             * **Canais de Voz**: ${(await voiceChannels(guildId)) ?? inlineCode("Sem Canal")}
             `
         )
-        .setFooter({ text: `Servidor Principal: ${guildNameDatabase}`, iconURL: guildIconUrlDatabase })
+        .setFooter({ text: `Servidor Principal: ${guildNameDatabase ?? "Nenhum"}`, iconURL: guildIconUrlDatabase ?? undefined })
         .setColor("White");
 
     // Componentes - Botões

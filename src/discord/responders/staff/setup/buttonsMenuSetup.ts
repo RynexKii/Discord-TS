@@ -1,6 +1,6 @@
 import { Responder, ResponderType } from "#base";
 import { database } from "#database";
-import { firstSetupMessage, menuChannelMessage, menuSetupMessage, menuWelcomeMessage, setupNotPermissionContent } from "#messages/*";
+import { firstSetupMessage, menuChannelMessage, menuSetupMessage, menuWelcomeMessage, setupNotPermissionContent } from "#messages";
 
 // Botão de Início
 new Responder({
@@ -10,7 +10,9 @@ new Responder({
     async run(interaction) {
         const guildId = interaction.guildId;
 
-        return await interaction.update(await menuSetupMessage(guildId));
+        await interaction.deferUpdate();
+
+        return await interaction.editReply(await menuSetupMessage(guildId));
     },
 });
 
@@ -24,7 +26,9 @@ new Responder({
 
         if (!interaction.member.permissions.has("Administrator")) return await interaction.reply(setupNotPermissionContent);
 
-        return await interaction.update(await menuChannelMessage(guildId));
+        await interaction.deferUpdate();
+
+        return await interaction.editReply(await menuChannelMessage(guildId));
     },
 });
 
@@ -38,7 +42,9 @@ new Responder({
 
         if (!interaction.member.permissions.has("Administrator")) return await interaction.reply(setupNotPermissionContent);
 
-        return await interaction.update(await menuWelcomeMessage(guildId));
+        await interaction.deferUpdate();
+
+        return await interaction.editReply(await menuWelcomeMessage(guildId));
     },
 });
 
@@ -54,8 +60,10 @@ new Responder({
 
         if (!interaction.member.permissions.has("Administrator")) return await interaction.reply(setupNotPermissionContent);
 
+        await interaction.deferUpdate();
+
         await database.guild.delete(guildId);
 
-        return await interaction.update(firstSetupMessage(guildName, guildId, guildIconUrl));
+        return await interaction.editReply(firstSetupMessage(guildName, guildId, guildIconUrl));
     },
 });

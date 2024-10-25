@@ -1,20 +1,24 @@
-import mongoose, { model } from "mongoose";
+import { PrismaClient } from "@prisma/client";
 import { log } from "#settings";
 import chalk from "chalk";
-import { profileSchema } from "./schemas/profile.js";
-import { guildSchema } from "./schemas/guild.js";
+import { GuildController } from "./Controllers/GuildController.js";
+import { UserController } from "./Controllers/UserController.js";
 
-// Conectando no MongoDB
-try {
-    await mongoose.connect(process.env.MONGO_URI, { dbName: "database" });
-    log.success(chalk.green("MongoDB connected"));
-} catch (err) {
-    log.error(err);
-    process.exit(1);
-}
+const prisma = new PrismaClient();
 
-// Criando o model e exportando
+// Conectando o Prisma
+prisma
+    .$connect()
+    .then(() => {
+        log.success(chalk.cyan("Prisma Supabase connected"));
+    })
+    .catch((error) => {
+        log.error(error);
+        process.exit(1);
+    });
+
+// Exportando seus Controllers
 export const database = {
-    guild: model("Guild", guildSchema, "Guild"),
-    profile: model("Profile", profileSchema, "Profile"),
+    guild: new GuildController(),
+    user: new UserController(),
 };

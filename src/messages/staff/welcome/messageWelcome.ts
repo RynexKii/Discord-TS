@@ -5,7 +5,7 @@ export async function messageWelcome(userId: string, guildId: string) {
     // Importando - Banco de Dados
     let welcomeMessage = await database.guild.get(guildId, "welcomeMessage");
 
-    if (!welcomeMessage) return;
+    if (!welcomeMessage || Array.isArray(welcomeMessage)) return;
 
     welcomeMessage = welcomeMessage.replace("userId", `<@${userId}>`);
 

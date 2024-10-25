@@ -1,6 +1,6 @@
 import { Responder, ResponderType } from "#base";
 import { database } from "#database";
-import { addChannelAlreadyContent, menuChannelMessage, removeChannelNotContent } from "#messages/*";
+import { addChannelAlreadyContent, menuChannelMessage, removeChannelNotContent } from "#messages";
 
 // Menu de seleção de Adicionar Canal
 new Responder({
@@ -13,9 +13,11 @@ new Responder({
         const selectChannelId = interaction.values[0];
         const selectChannelType = interaction.channels.get(selectChannelId)?.type;
 
-        const allChannelDatabase: string[] = await database.guild.get(guildId, "bloodsChannelAll");
+        await interaction.deferUpdate();
 
-        if (allChannelDatabase.includes(selectChannelId)) return await interaction.reply(addChannelAlreadyContent(selectChannelId));
+        const allChannelDatabase: string[] | undefined = await database.guild.get(guildId, "bloodsChannelAll");
+
+        if (allChannelDatabase && allChannelDatabase.includes(selectChannelId)) return await interaction.followUp(addChannelAlreadyContent(selectChannelId));
 
         switch (selectChannelType) {
             // Tipo 0 = Canal de Texto
@@ -30,7 +32,7 @@ new Responder({
                 break;
         }
 
-        return await interaction.update(await menuChannelMessage(guildId));
+        return await interaction.editReply(await menuChannelMessage(guildId));
     },
 });
 
@@ -45,9 +47,11 @@ new Responder({
         const selectChannelId = interaction.values[0];
         const selectChannelType = interaction.channels.get(selectChannelId)?.type;
 
-        const allChannelDatabase: string[] = await database.guild.get(guildId, "bloodsChannelAll");
+        const allChannelDatabase: string[] | undefined = await database.guild.get(guildId, "bloodsChannelAll");
 
-        if (!allChannelDatabase.includes(selectChannelId)) return await interaction.reply(removeChannelNotContent(selectChannelId));
+        await interaction.deferUpdate();
+
+        if (allChannelDatabase && !allChannelDatabase.includes(selectChannelId)) return await interaction.followUp(removeChannelNotContent(selectChannelId));
 
         switch (selectChannelType) {
             // Tipo 0 = Canal de Texto
@@ -62,6 +66,6 @@ new Responder({
                 break;
         }
 
-        return await interaction.update(await menuChannelMessage(guildId));
+        return await interaction.editReply(await menuChannelMessage(guildId));
     },
 });

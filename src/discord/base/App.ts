@@ -4,12 +4,9 @@ import { CustomItents, CustomPartials, spaceBuilder, toNull } from "@magicyan/di
 import ck from "chalk";
 import { CacheType, Client, type ClientOptions, version as djsVersion } from "discord.js";
 import glob from "fast-glob";
-import path from "node:path";
-
-type R<O extends BootstrapAppOptions> = O["multiple"] extends true ? Client[] : Client;
 
 interface BootstrapAppOptions extends Partial<ClientOptions> {
-    /** src | build */
+    /** Application entry point directory */
     workdir: string;
     /** Commands options */
 	commands?: {
@@ -23,11 +20,9 @@ interface BootstrapAppOptions extends Partial<ClientOptions> {
 	/**
 	 * A list of paths that will be imported to load the project's structure classes
 	 * 
-	 * The paths are relative to the src/dist folder
+	 * The paths are relative to the **workdir** folder
 	 */
     directories?: string[];
-    /** Create multiple app instances */
-    multiple?: boolean;
     /** Send load logs in terminal */
     loadLogs?: boolean;
     /** Run before load directories */
@@ -35,56 +30,40 @@ interface BootstrapAppOptions extends Partial<ClientOptions> {
     /** Run when client is ready */
     whenReady?(client: Client<true>): void;
 }
-export async function bootstrapApp<O extends BootstrapAppOptions>(options: O): Promise<R<O>> {
+export async function bootstrapApp<O extends BootstrapAppOptions>(options: O){
     if (options.responders){
         Responder.setup({
             onNotFound: options.responders.onNotFound
         });
     }
-    if (options.multiple){
-        const clients: Client[] = [];
-        for(const token of process.env.BOT_TOKEN.split(" ")){
-            clients.push(createClient(token, options));
-        }
-        await loadDirectories(options);
-        for(const client of clients) {
-            Event.register(client);
-            client.login();
-        }
-        return clients as R<O>;
-    }
     const client = createClient(process.env.BOT_TOKEN, options);
     await loadDirectories(options);
-    Event.register(client);
-
-    client.login();
-    return client as R<O>;
-}
-type LoadDirsOptions = Pick<BootstrapAppOptions, "workdir" | "directories" | "loadLogs">;
-async function loadDirectories(options: LoadDirsOptions) {
-    const { workdir, directories=[], loadLogs=true } = options;
-    const foldername = path.basename(workdir);
-    const pattern: string = "**/*.{ts,js,tsx,jsx}";
-    const patterns: string[] = [
-        `!./${foldername}/discord/base/*`,
-        `./${foldername}/discord/${pattern}`,
-        directories.map(dir => path.join(foldername, dir))
-        .map(p => p.replaceAll("\\", "/"))
-        .map(p => `./${p}/${pattern}`)
-    ].flat();
     
-    const paths: string[] = await glob(patterns, { absolute: true });
-    await Promise.all(paths.map(path => import(`file://${path}`)));
-
-    if (loadLogs??true){
-        Command.loadLogs(); Event.loadLogs(); Responder.loadLogs();
-    }
     console.log();
     log.success(spaceBuilder("📦",
         `${ck.hex("#5865F2").underline("discord.js")} ${ck.yellow(djsVersion)}`,
         "/",
         `${ck.hex("#68a063").underline("NodeJs")} ${ck.yellow(process.versions.node)}`,
     ));
+
+    Event.register(client);
+    client.login();
+}
+type LoadDirsOptions = Pick<BootstrapAppOptions, "workdir" | "directories" | "loadLogs">;
+async function loadDirectories(options: LoadDirsOptions) {
+    const { workdir, directories=[], loadLogs=true } = options;
+    const pattern: string = "**/*.{ts,js,tsx,jsx}";
+    const patterns: string[] = [
+        `!./discord/base/*`, `./discord/${pattern}`,
+        directories.map(p => p.replaceAll("\\", "/")).map(p => `./${p}/${pattern}`)
+    ].flat();
+    
+    const paths: string[] = await glob(patterns, { absolute: true, cwd: workdir });
+    await Promise.all(paths.map(path => import(`file://${path}`)));
+
+    if (loadLogs??true){
+        Command.loadLogs(); Event.loadLogs(); Responder.loadLogs();
+    }
 }
 function createClient(token: string, options: BootstrapAppOptions): Client {
     const client = new Client(Object.assign(options, {
@@ -92,8 +71,9 @@ function createClient(token: string, options: BootstrapAppOptions): Client {
         partials: options.partials ?? CustomPartials.All,
         failIfNotExists: options.failIfNotExists ?? false
     }));
+    client.token=token;
 
-    options.beforeLoad?.(client);
+    if (options.beforeLoad) options.beforeLoad(client);
 
     client.on("ready", async (client) => {
         const messages: string[] = [];
@@ -123,6 +103,5 @@ function createClient(token: string, options: BootstrapAppOptions): Client {
             default: Responder.onInteraction(interaction); return;
         }
     });
-    client.token=token;
     return client;
 }

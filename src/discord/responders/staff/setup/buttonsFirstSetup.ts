@@ -1,6 +1,6 @@
 import { Responder, ResponderType } from "#base";
 import { database } from "#database";
-import { menuSetupMessage, setupNotPermissionContent } from "#messages/*";
+import { menuSetupMessage, setupNotPermissionContent } from "#messages";
 
 // Botão de Confirmar
 new Responder({
@@ -14,12 +14,14 @@ new Responder({
 
         if (!interaction.member.permissions.has("Administrator")) return await interaction.reply(setupNotPermissionContent);
 
+        await interaction.deferUpdate();
+
         await database.guild.set(guildId, "guildId", guildId);
         await database.guild.set(guildId, "guildName", guildName);
 
         if (guildIconUrl) await database.guild.set(guildId, "guildIconUrl", guildIconUrl);
 
-        return await interaction.update(await menuSetupMessage(guildId));
+        return await interaction.editReply(await menuSetupMessage(guildId));
     },
 });
 

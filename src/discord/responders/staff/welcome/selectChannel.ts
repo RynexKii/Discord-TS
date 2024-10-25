@@ -1,6 +1,6 @@
 import { Responder, ResponderType } from "#base";
 import { database } from "#database";
-import { menuWelcomeMessage } from "#messages/*";
+import { menuWelcomeMessage } from "#messages";
 
 // Menu de seleção de Adicionar o Canal Principal
 new Responder({
@@ -11,9 +11,11 @@ new Responder({
         const guildId = interaction.guildId;
         const channelId = interaction.values[0];
 
+        await interaction.deferUpdate();
+
         await database.guild.set(guildId, "welcomeChannel", channelId);
 
-        await interaction.update(await menuWelcomeMessage(guildId));
+        await interaction.editReply(await menuWelcomeMessage(guildId));
     },
 });
 
@@ -26,8 +28,10 @@ new Responder({
         const guildId = interaction.guildId;
         const channelId = interaction.values[0];
 
+        await interaction.deferUpdate();
+
         await database.guild.set(guildId, "welcomeChannelLogs", channelId);
 
-        await interaction.update(await menuWelcomeMessage(guildId));
+        await interaction.editReply(await menuWelcomeMessage(guildId));
     },
 });

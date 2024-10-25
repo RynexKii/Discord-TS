@@ -11,8 +11,8 @@ export async function menuWelcomeMessage(guildId: string) {
     let channelDatabase = await database.guild.get(guildId, "welcomeChannel");
     let channelLogsDatabase = await database.guild.get(guildId, "welcomeChannelLogs");
 
-    if (channelDatabase) channelDatabase = channelMention(channelDatabase);
-    if (channelLogsDatabase) channelLogsDatabase = channelMention(channelLogsDatabase);
+    if (channelDatabase && channelDatabase) channelDatabase = channelMention(channelDatabase.toString());
+    if (channelLogsDatabase) channelLogsDatabase = channelMention(channelLogsDatabase.toString());
 
     // Mensagem - Embed
     const embedMenuWelcome = new EmbedBuilder()
@@ -30,7 +30,7 @@ export async function menuWelcomeMessage(guildId: string) {
             **Canal de Logs**: ${channelLogsDatabase ?? inlineCode("Sem Canal")}
             `
         )
-        .setFooter({ text: `Servidor Principal: ${guildNameDatabase}`, iconURL: guildIconUrlDatabase })
+        .setFooter({ text: `Servidor Principal: ${guildNameDatabase ?? "Nenhum"}`, iconURL: guildIconUrlDatabase ?? undefined })
         .setColor("White");
 
     // Componentes - Botões

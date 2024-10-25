@@ -1,5 +1,5 @@
 import { Responder, ResponderType } from "#base";
-import { addChannelMessage, removeChannelMessage } from "#messages/*";
+import { addChannelMessage, removeChannelMessage } from "#messages";
 
 // Botão de Adicionar
 new Responder({

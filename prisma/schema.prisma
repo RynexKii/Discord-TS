@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Guilds {
+  guildId            String   @id
+  guildName          String?  @db.VarChar(255)
+  guildIconUrl       String?  @db.Text
+  bloodsChannelAll   String[]
+  bloodsChannelText  String[]
+  bloodsChannelVoice String[]
+  welcomeMessage     String?  @db.Text
+  welcomeChannel     String?  @db.VarChar(100)
+  welcomeChannelLogs String?  @db.VarChar(100)
+}
+
+model Users {
+  userId  String  @id
+  bloods  Int?    @default(0)
+  fame    Int?    @default(0)
+  aboutMe String? @db.Text
+}

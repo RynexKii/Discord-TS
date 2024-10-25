@@ -19,7 +19,7 @@ export async function menuSetupMessage(guildId: string) {
             **Boas Vindas** - Configure uma mensagem de boas vindas para quem entrar no servidor.
             **Reset** - Reseta todas as configurações.`
         )
-        .setFooter({ text: `Servidor Principal: ${guildNameDatabase}`, iconURL: guildIconUrlDatabase })
+        .setFooter({ text: `Servidor Principal: ${guildNameDatabase ?? "Nenhum"}`, iconURL: guildIconUrlDatabase ?? undefined })
         .setColor("White");
 
     // Componentes - Botões

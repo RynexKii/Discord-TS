@@ -1,6 +1,6 @@
 import { Command } from "#base";
 import { database } from "#database";
-import { firstSetupMessage, menuSetupMessage } from "#messages/*";
+import { firstSetupMessage, menuSetupMessage } from "#messages";
 import { ApplicationCommandOptionType, ApplicationCommandType } from "discord.js";
 
 new Command({
@@ -16,14 +16,16 @@ new Command({
         },
     ],
     async run(interaction) {
+        await interaction.deferReply({ ephemeral: true });
+
         const guildId = interaction.guildId;
         const guildName = interaction.guild.name;
         const guildIconUrl = interaction.guild.iconURL();
 
         const guildIdDatabase = await database.guild.get(guildId, "guildId");
 
-        if (!guildIdDatabase) return await interaction.reply(firstSetupMessage(guildName, guildId, guildIconUrl));
+        if (!guildIdDatabase) return await interaction.editReply(firstSetupMessage(guildName, guildId, guildIconUrl));
 
-        return await interaction.reply(await menuSetupMessage(guildId));
+        return await interaction.editReply(await menuSetupMessage(guildId));
     },
 });
