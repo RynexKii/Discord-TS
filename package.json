@@ -47,8 +47,8 @@
         "#settings": [
             "./build/settings/index.js"
         ],
-        "#tools": [
-            "./build/tools/index.js"
+        "#config": [
+            "./build/config/index.js"
         ],
         "#server": [
             "./build/server/index.js"

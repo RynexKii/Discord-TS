@@ -21,8 +21,9 @@ model Guilds {
 }
 
 model Users {
-  userId  String @id
-  bloods  Int    @default(0)
-  fame    Int    @default(0)
-  aboutMe String @db.Text
+  userId            String @id
+  bloods            Int    @default(0)
+  bloodsMonthlyRank Int    @default(0)
+  fame              Int    @default(0)
+  aboutMe           String @db.Text
 }
