@@ -1,5 +1,5 @@
 import { Guilds, PrismaClient } from "@prisma/client";
-import { GuildSetData } from "database/Interfaces/Guild.js";
+import { GuildGetFirstData, GuildSetData } from "database/Interfaces/Guild.js";
 
 export class GuildController {
     private prisma: PrismaClient;
@@ -29,6 +29,15 @@ export class GuildController {
         const guild = await this.prisma.guilds.findUnique({ where: { guildId: guildId } });
 
         if (!guild) return undefined;
+
+        return guild[key];
+    }
+
+    // GetGuild = Retorna a Guild registrada no Banco de Dados
+    async getGuild(key: keyof GuildGetFirstData) {
+        const guild = await this.prisma.guilds.findFirst();
+
+        if (!guild) return null;
 
         return guild[key];
     }

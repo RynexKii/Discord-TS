@@ -4,7 +4,7 @@ import { messageWelcome } from "#messages";
 import { ChannelType } from "discord.js";
 
 new Event({
-    name: "Envia uma mensagem de Bem-Vindo(a)",
+    name: "❰ Welcome ❱ Envia uma mensagem de Bem-Vindo(a)",
     event: "guildMemberAdd",
     async run(client) {
         const guildId = client.guild.id;

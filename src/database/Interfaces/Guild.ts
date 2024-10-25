@@ -6,3 +6,9 @@ export interface GuildSetData {
     welcomeChannel: string | null;
     welcomeChannelLogs: string | null;
 }
+
+export interface GuildGetFirstData {
+    guildId: string;
+    guildName: string | null;
+    guildIconUrl: string | null;
+}

@@ -4,7 +4,7 @@ import { database } from "#database";
 import { randomNumber } from "@magicyan/discord";
 
 new Event({
-    name: "dsa",
+    name: "❰ Bloods ❱ Adiciona Bloods para cada mensagem enviada no Servidor",
     event: "messageCreate",
     async run(message) {
         const {
