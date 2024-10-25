@@ -1,4 +1,5 @@
 import { Guilds, PrismaClient } from "@prisma/client";
+import { GuildSetData } from "database/Interfaces/Guild.js";
 
 export class GuildController {
     private prisma: PrismaClient;
@@ -33,7 +34,7 @@ export class GuildController {
     }
 
     // Set = Para setar um valor na chave no Banco de Dados
-    async set(guildId: string, key: string, value: number | string) {
+    async set(guildId: string, key: keyof GuildSetData, value: number | string) {
         const guild = await this.prisma.guilds.findUnique({ where: { guildId: guildId } });
 
         if (!guild) await this.create(guildId);
