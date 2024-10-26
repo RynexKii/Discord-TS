@@ -3,6 +3,7 @@ import { log } from "#settings";
 import chalk from "chalk";
 import { GuildController } from "./Controllers/GuildController.js";
 import { UserController } from "./Controllers/UserController.js";
+import { UserCooldownsController } from "./Controllers/UserCooldownsController.js";
 
 const prisma = new PrismaClient();
 
@@ -21,4 +22,5 @@ prisma
 export const database = {
     guild: new GuildController(),
     user: new UserController(),
+    userCooldowns: new UserCooldownsController(),
 };

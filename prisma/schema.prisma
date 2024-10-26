@@ -21,9 +21,19 @@ model Guilds {
 }
 
 model Users {
-  userId            String @id
-  bloods            Int    @default(0)
-  bloodsMonthlyRank Int    @default(0)
-  fame              Int    @default(0)
-  aboutMe           String @db.Text
+  userId            String          @id
+  bloods            Int             @default(0)
+  bloodsMonthlyRank Int             @default(0)
+  shards            Int             @default(0)
+  fame              Int             @default(0)
+  aboutMe           String          @db.Text
+  cooldowns         UserCooldowns[]
+}
+
+model UserCooldowns {
+  userId      String   @id
+  rewardDay   DateTime?
+  rewardWeek  DateTime?
+  rewardMonth DateTime?
+  user        Users    @relation(fields: [userId], references: [userId])
 }
